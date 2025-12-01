@@ -1,4 +1,4 @@
-just convert this code to template doing minimum changes i dont need any improvement just convert it to "/*
+/*
     Name   : Fahad Nazeer
     Roll No: 241372
     Class  : BSAI-F-24-A
@@ -261,4 +261,5 @@ public:
 
 int main()
 {
+
 }"
