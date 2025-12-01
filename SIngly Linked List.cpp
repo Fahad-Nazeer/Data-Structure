@@ -8,37 +8,38 @@
 using namespace std;
 
 
+template <typename T>
 class Node
 {
 private:
-    int element;
-    Node* nextNode;
-  
+    T element;
+    Node<T>* nextNode;
+    
 
 public:
 
-    Node(int val,Node*ptr=NULL)
+    Node(T val, Node<T>* ptr = NULL)
     {
         element = val;
         nextNode = ptr;
     }
 
-    int get_element() const
+    T get_element() const
     {
         return element;
     }
 
-    Node* get_next_node() const
+    Node<T>* get_next_node() const
     {
         return nextNode;
     }
 
-    void set_element(int value)
+    void set_element(T value)
     {
         element = value;
     }
 
-    void set_next_node(Node* ptr)
+    void set_next_node(Node<T>* ptr)
     {
         nextNode = ptr;
     }
@@ -47,10 +48,11 @@ public:
 };
 
 
+template <typename T>
 class List
 {
 private:
-    Node* head;
+    Node<T>* head;
 
 public:
 
@@ -67,14 +69,14 @@ public:
     int size() const
     {
         int c = 0;
-        for (Node* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
+        for (Node<T>* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
         {
             c++;
         }
         return c;
     }
 
-    int front() const
+    T front() const
     {
         if (empty())
         {
@@ -83,16 +85,16 @@ public:
         return head->get_element();
     }
 
-    int end() const
+    T end() const
     {
         if (empty())
         {
             throw underflow_error("The list is empty");
         }
 
-        int last;
+        T last;
 
-        for (Node* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
+        for (Node<T>* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
         {
             last = ptr->get_element();
         }
@@ -100,15 +102,15 @@ public:
         return last;
     }
 
-    Node* head_ptr() const
+    Node<T>* head_ptr() const
     {
         return head;
     }
 
-    int count(int value) const
+    int count(T value) const
     {
         int c = 0;
-        for (Node* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
+        for (Node<T>* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
         {
             if (ptr->get_element() == value)
             {
@@ -118,9 +120,9 @@ public:
         return c;
     }
 
-    void push_front(int val)
+    void push_front(T val)
     {
-        Node* newNode = new Node(val);
+        Node<T>* newNode = new Node<T>(val);
 
         if (empty())
         {
@@ -133,16 +135,16 @@ public:
         }
     }
 
-    int pop_front()
+    T pop_front()
     {
         if (empty())
         {
             throw underflow_error("The list is empty");
         }
 
-        int a = front();
+        T a = front();
 
-        Node* temp = head;
+        Node<T>* temp = head;
         head = head->get_next_node();
         temp->set_next_node(NULL);
         delete temp;
@@ -150,9 +152,9 @@ public:
         return a;
     }
 
-    void push_back(int val)
+    void push_back(T val)
     {
-        Node* newNode = new Node(val);
+        Node<T>* newNode = new Node<T>(val);
 
         if (empty())
         {
@@ -160,7 +162,7 @@ public:
         }
         else
         {
-            for (Node* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
+            for (Node<T>* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
             {
                 if (ptr->get_next_node() == NULL)
                 {
@@ -171,7 +173,7 @@ public:
         }
     }
 
-    int pop_back()
+    T pop_back()
     {
         if (empty())
         {
@@ -183,14 +185,14 @@ public:
             return pop_front();
         }
 
-        int val;
+        T val;
 
-        for (Node* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
+        for (Node<T>* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
         {
             if (ptr->get_next_node() != NULL &&
                 ptr->get_next_node()->get_next_node() == NULL)
             {
-                Node* temp = ptr->get_next_node();
+                Node<T>* temp = ptr->get_next_node();
                 val = temp->get_element();
 
                 ptr->set_next_node(NULL);
@@ -205,13 +207,13 @@ public:
 
     void print()
     {
-        for (Node* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
+        for (Node<T>* ptr = head; ptr != NULL; ptr = ptr->get_next_node())
         {
             cout << ptr->get_element() << " ";
         }
     }
 
-    int erase(int value)
+    int erase(T value)
     {
         int count = 0;
 
@@ -219,22 +221,22 @@ public:
         {
             throw underflow_error("The list is empty");
         }
-        for (Node* ptr = head; head != NULL && head->get_element() == value; ptr = head)
+        for (Node<T>* ptr = head; head != NULL && head->get_element() == value; ptr = head)
         {
-            Node* temp = head;
+            Node<T>* temp = head;
             head = head->get_next_node();
             temp->set_next_node(NULL);
             delete temp;
             count++;
         }
-        Node* prev = head;
+        Node<T>* prev = head;
 
-        for (Node* ptr = head->get_next_node(); ptr != NULL; ptr = ptr->get_next_node())
+        for (Node<T>* ptr = (head != NULL ? head->get_next_node() : NULL); ptr != NULL; ptr = ptr->get_next_node())
         {
             if (ptr->get_element() == value)
             {
                 prev->set_next_node(ptr->get_next_node());
-                Node* temp = ptr;
+                Node<T>* temp = ptr;
                 ptr = prev;
                 temp->set_next_node(NULL);
                 delete temp;
