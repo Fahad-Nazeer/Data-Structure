@@ -1,12 +1,10 @@
 /*
-    Name   : Fahad Nazeer
-    Roll No: 241372
-    Class  : BSAI-F-24-A
+Â  Â  NameÂ  Â : Fahad Nazeer
+Â  Â  Roll No: 241372
+Â  Â  ClassÂ  : BSAI-F-24-A
 */
 
 #include <iostream>
-#include <algorithm>
-#include <stdexcept>
 using namespace std;
 
 template <typename T>
@@ -77,7 +75,7 @@ public:
     {
         if (empty())
         {
-            throw underflow_error("The list is empty");
+            throw "The list is empty";
         }
         return head->get_element();
     }
@@ -86,7 +84,7 @@ public:
     {
         if (empty())
         {
-            throw underflow_error("The list is empty");
+            throw "The list is empty";
         }
 
         T last;
@@ -136,7 +134,7 @@ public:
     {
         if (empty())
         {
-            throw underflow_error("The list is empty");
+            throw "The list is empty";
         }
 
         T a = front();
@@ -174,7 +172,7 @@ public:
     {
         if (empty())
         {
-            throw underflow_error("The list is empty");
+            throw "The list is empty";
         }
 
         if (size() == 1)
@@ -216,7 +214,7 @@ public:
 
         if (empty())
         {
-            throw underflow_error("The list is empty");
+            throw "The list is empty";
         }
         for (Node<T>* ptr = head; head != NULL && head->get_element() == value; ptr = head)
         {
@@ -237,7 +235,7 @@ public:
                 ptr = prev;
                 temp->set_next_node(NULL);
                 delete temp;
-
+                
                 count++;
             }
             else
@@ -299,7 +297,7 @@ T Queue<T>::top() const {
 
     if (empty()) {
 
-        throw underflow_error("The list is empty");
+        throw "The list is empty";
 
     }
 
@@ -312,7 +310,7 @@ T Queue<T>::pop() {
 
     if (empty()) {
 
-        throw underflow_error("The list is empty");
+        throw "The list is empty";
 
     }
 
@@ -325,13 +323,12 @@ class Binary_tree
 {
 private:
     Type element;
-    Binary_tree* parent_node;
     Binary_tree* left_child;
     Binary_tree* right_child;
 
 public:
-    Binary_tree(Type const& obj = Type(), Binary_tree* p = NULL)
-        : element(obj), parent_node(p), left_child(NULL), right_child(NULL)
+    Binary_tree(Type const& obj = Type()) 
+        : element(obj), left_child(NULL), right_child(NULL)
     {
     }
 
@@ -340,21 +337,14 @@ public:
         return element;
     }
 
-    Binary_tree* parent() const
+    Binary_tree* left() const
     {
-        return parent_node;
+        return left_child;
     }
 
-    bool is_root() const
+    Binary_tree* right() const
     {
-        return (parent() == NULL);
-    }
-
-    Binary_tree* child(int n) const
-    {
-        if (n == 1) return left_child;
-        if (n == 2) return right_child;
-        return NULL;
+        return right_child;
     }
 
     int degree() const
@@ -374,11 +364,11 @@ public:
     {
         if (left_child == NULL)
         {
-            left_child = new Binary_tree(obj, this);
+            left_child = new Binary_tree(obj);
         }
         else if (right_child == NULL)
         {
-            right_child = new Binary_tree(obj, this);
+            right_child = new Binary_tree(obj);
         }
     }
 
@@ -396,30 +386,8 @@ public:
         int hr = 0;
         if (left_child != NULL) hl = 1 + left_child->height();
         if (right_child != NULL) hr = 1 + right_child->height();
-        return std::max(hl, hr);
-    }
-
-    void detach()
-    {
-        if (is_root()) return;
-
-        if (parent_node->left_child == this)
-            parent_node->left_child = NULL;
-        else if (parent_node->right_child == this)
-            parent_node->right_child = NULL;
-
-        parent_node = NULL;
-    }
-
-    void attach(Binary_tree<Type>* tree)
-    {
-        if (!tree->is_root()) tree->detach();
-
-        tree->parent_node = this;
-        if (left_child == NULL)
-            left_child = tree;
-        else if (right_child == NULL)
-            right_child = tree;
+        
+        return (hl > hr) ? hl : hr;
     }
 
     void depth_first_traversal() const
@@ -445,5 +413,5 @@ public:
 
 int main()
 {
-    
+ 
 }
